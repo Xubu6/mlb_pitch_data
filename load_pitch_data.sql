@@ -6,19 +6,23 @@ USE `pitch_data`;
 
 -- Load atbat data from atbat.csv 
 LOAD DATA 
-	INFILE '/Users/alanxu/mlb_pitch_data/raw_data/atbats.csv'
+	INFILE '/Applications/MAMP/tmp/atbats.csv' IGNORE
 	INTO TABLE atbats
     FIELDS ENCLOSED BY '"' TERMINATED BY ','
-	LINES TERMINATED BY '\r\n'
+	LINES TERMINATED BY '\n'
     IGNORE 1 LINES; -- Header Line
     
 -- Load pitch data from pitches.csv 
 LOAD DATA 
-	INFILE '/Users/alanxu/mlb_pitch_data/raw_data/pitches.csv'
+	INFILE '/Applications/MAMP/tmp/pitches.csv' IGNORE
 	INTO TABLE pitches
     FIELDS ENCLOSED BY '"' TERMINATED BY ','
-	LINES TERMINATED BY '\r\n'
-    IGNORE 1 LINES; -- Header line
+	LINES TERMINATED BY '\n';
+
     
-SELECT * FROM pitches
+SELECT * FROM atbats
+LIMIT 50;
+
+SELECT *
+FROM pitches
 LIMIT 50;
