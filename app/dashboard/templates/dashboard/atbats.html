@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>At Bats</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard//css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
+<!--===============================================================================================-->
+	<h2 style="text-align: center; font-family: Montserrat-Medium; background-color: lightgrey; font-size: 46px; padding-top: 25px">At Bats</h2>
+</head>
+<body>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver5 m-b-110">
+					<table data-vertable="ver5">
+						<thead>
+							<tr class="row100 head">
+								<th class="column100 column1" data-column="column1">ab_id</th>
+								<th class="column100 column2" data-column="column2">batter_id</th>
+								<th class="column100 column3" data-column="column3">event</th>
+								<th class="column100 column4" data-column="column4">g_id</th>
+								<th class="column100 column5" data-column="column5">inning</th>
+								<th class="column100 column6" data-column="column6">o</th>
+								<th class="column100 column7" data-column="column7">p_score</th>
+								<th class="column100 column8" data-column="column8">p_throws</th>
+								<th class="column100 column9" data-column="column9">pitcher_id</th>
+								<th class="column100 column10" data-column="column10">stand</th>
+								<th class="column100 column11" data-column="column11">top</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if at_bats %}  
+							{% for row in at_bats %}
+							<tr>
+								<td class="column100 column1" data-column="column1">{{row.ab_id}}</td>
+								<td class="column100 column2" data-column="column2">{{row.batter_id}}</td>
+								<td class="column100 column3" data-column="column3">{{row.event}}</td>
+								<td class="column100 column4" data-column="column4">{{row.g_id}}</td>
+								<td class="column100 column5" data-column="column5">{{row.inning}}</td>
+								<td class="column100 column6" data-column="column6">{{row.o}}</td>
+								<td class="column100 column7" data-column="column7">{{row.p_score}}</td>
+								<td class="column100 column8" data-column="column8">{{row.p_throws}}</td>
+								<td class="column100 column9" data-column="column9">{{row.pitcher_id}}</td>
+								<td class="column100 column10" data-column="column10">{{row.stand}}</td>
+								<td class="column100 column11" data-column="column11">{{row.top}}</td>
+							</tr>
+							{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!--===============================================================================================-->	
+	<script src="{% static 'dashboard/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/js/main.js' %}"></script>
+
+</body>
+</html>

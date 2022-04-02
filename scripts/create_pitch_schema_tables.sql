@@ -14,6 +14,7 @@ USE `pitch_data` ;
 DROP TABLE IF EXISTS `pitch_data`.`pitch_data` ;
 
 CREATE TABLE IF NOT EXISTS `pitch_data`.`pitch_data` (
+  `id` INT(11) PRIMARY KEY,
   `ab_id` INT(11) NOT NULL,
   `batter_id` INT(11) NULL,
   `event` VARCHAR(20) NULL,

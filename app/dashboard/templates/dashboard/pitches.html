@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pitches</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard//css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
+<!--===============================================================================================-->
+	<h2 style="text-align: center; font-family: Montserrat-Medium; background-color: lightgrey; font-size: 46px; padding-top: 25px">Pitches</h2>
+<!--===============================================================================================-->
+</head>
+<body>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver3 m-b-110">
+					<table data-vertable="ver3">
+						<thead>
+							<tr class="row100 head">
+								<th class="column100 column1" data-column="column1">px</th>
+								<th class="column100 column2" data-column="column2">pz</th>
+								<th class="column100 column3" data-column="column3">start_speed</th>
+                                <th class="column100 column4" data-column="column3">end_speed</th>
+								<th class="column100 column5" data-column="column4">spin_rate</th>
+								<th class="column100 column6" data-column="column5">spin_dir</th>
+								<th class="column100 column7" data-column="column6">break_angle</th>
+								<th class="column100 column8" data-column="column7">break_length</th>
+								<th class="column100 column9" data-column="column8">break_y</th>
+								<th class="column100 column10" data-column="column9">ax</th>
+								<th class="column100 column11" data-column="column10">ay</th>
+								<th class="column100 column12" data-column="column11">az</th>
+                                <th class="column100 column13" data-column="column1">sz_bot</th>
+								<th class="column100 column14" data-column="column2">sz_top</th>
+								<th class="column100 column15" data-column="column3">type_confidence</th>
+                                <th class="column100 column16" data-column="column3">vx0</th>
+								<th class="column100 column17" data-column="column4">vy0</th>
+								<th class="column100 column18" data-column="column5">vz0</th>
+								<th class="column100 column19" data-column="column6">x</th>
+								<th class="column100 column20" data-column="column7">x0</th>
+								<th class="column100 column21" data-column="column8">y</th>
+								<th class="column100 column22" data-column="column9">y0</th>
+								<th class="column100 column23" data-column="column10">z0</th>
+								<th class="column100 column24" data-column="column11">pfx_x</th>
+                                <th class="column100 column25" data-column="column4">pfx_z</th>
+                                <th class="column100 column25" data-column="column25">ab_id</th>
+								<th class="column100 column26" data-column="column5">nasty</th>
+								<th class="column100 column27" data-column="column6">zone</th>
+								<th class="column100 column28" data-column="column7">code</th>
+								<th class="column100 column29" data-column="column8">type</th>
+								<th class="column100 column30" data-column="column9">pitch_type</th>
+								<th class="column100 column31" data-column="column10">event_num</th>
+								<th class="column100 column32" data-column="column11">b_score</th>
+                                <th class="column100 column33" data-column="column7">b_count</th>
+								<th class="column100 column34" data-column="column8">s_count</th>
+								<th class="column100 column35" data-column="column9">outs</th>
+								<th class="column100 column36" data-column="column10">pitch_num</th>
+								<th class="column100 column37" data-column="column11">on_1b</th>
+                                <th class="column100 column38" data-column="column11">on_2b</th>
+                                <th class="column100 column39" data-column="column11">on_3b</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if pitches %}  
+							{% for row in pitches %}
+							<tr>
+								<td class="column100 column1" data-column="column1">{{row.px}}</td>
+								<td class="column100 column2" data-column="column2">{{row.pz}}</td>
+								<td class="column100 column3" data-column="column3">{{row.start_speed}}</td>
+                                <td class="column100 column4" data-column="column4">{{row.end_speed}}</td>
+								<td class="column100 column5" data-column="column5">{{row.spin_rate}}</td>
+								<td class="column100 column6" data-column="column6">{{row.spin_dir}}</td>
+								<td class="column100 column7" data-column="column7">{{row.break_angle}}</td>
+								<td class="column100 column8" data-column="column8">{{row.break_length}}</td>
+								<td class="column100 column9" data-column="column9">{{row.break_y}}</td>
+								<td class="column100 column10" data-column="column10">{{row.ax}}</td>
+								<td class="column100 column11" data-column="column11">{{row.ay}}</td>
+								<td class="column100 column12" data-column="column12">{{row.az}}</td>
+                                <td class="column100 column13" data-column="column13">{{row.sz_bot}}</td>
+								<td class="column100 column14" data-column="column14">{{row.sz_top}}</td>
+								<td class="column100 column15" data-column="column15">{{row.type_confidence}}</td>
+                                <td class="column100 column16" data-column="column16">{{row.vx0}}</td>
+								<td class="column100 column17" data-column="column17">{{row.vy0}}</td>
+								<td class="column100 column18" data-column="column18">{{row.vz0}}</td>
+								<td class="column100 column19" data-column="column19">{{row.x}}</td>
+								<td class="column100 column20" data-column="column20">{{row.x0}}</td>
+								<td class="column100 column21" data-column="column21">{{row.y}}</td>
+								<td class="column100 column22" data-column="column22">{{row.y0}}</td>
+								<td class="column100 column23" data-column="column23">{{row.z0}}</td>
+								<td class="column100 column24" data-column="column24">{{row.pfx_x}}</td>
+                                <td class="column100 column25" data-column="column25">{{row.pfx_z}}</td>
+                                <td class="column100 column25" data-column="column25">{{row.ab_id}}</td>
+								<td class="column100 column26" data-column="column26">{{row.nasty}}</td>
+								<td class="column100 column27" data-column="column27">{{row.zone}}</td>
+								<td class="column100 column28" data-column="column28">{{row.code}}</td>
+								<td class="column100 column29" data-column="column29">{{row.type}}</td>
+								<td class="column100 column30" data-column="column30">{{row.pitch_type}}</td>
+								<td class="column100 column31" data-column="column31">{{row.event_num}}</td>
+								<td class="column100 column32" data-column="column32">{{row.b_score}}</td>
+                                <td class="column100 column33" data-column="column33">{{row.b_count}}</td>
+								<td class="column100 column34" data-column="column34">{{row.s_count}}</td>
+								<td class="column100 column35" data-column="column35">{{row.outs}}</td>
+								<td class="column100 column36" data-column="column36">{{row.pitch_num}}</td>
+								<td class="column100 column37" data-column="column37">{{row.on_1b}}</td>
+                                <td class="column100 column38" data-column="column38">{{row.on_2b}}</td>
+                                <td class="column100 column39" data-column="column39">{{row.on_3b}}</td>
+							</tr>
+							{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!--===============================================================================================-->	
+	<script src="{% static 'dashboard/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/js/main.js' %}"></script>
+
+</body>
+</html>

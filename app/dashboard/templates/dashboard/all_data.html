@@ -1,0 +1,165 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>MegaTable (All MLB Pitch Data 2015-2018)</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard//css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
+<!--===============================================================================================-->
+	<h2 style="text-align: center; font-family: Montserrat-Medium; background-color: lightgrey; font-size: 46px; padding-top: 25px">MegaTable (All MLB Pitch Data 2015-2018)</h2>
+</head>
+<body>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver2 m-b-110">
+					<table data-vertable="ver2">
+						<thead>
+							<tr class="row100 head">
+								<th class="column100 column1" data-column="column1">id</th>
+								<th class="column100 column2" data-column="column2">ab_id</th>
+								<th class="column100 column3" data-column="column3">batter_id</th>
+                                <th class="column100 column3" data-column="column3">event</th>
+								<th class="column100 column4" data-column="column4">g_id</th>
+								<th class="column100 column5" data-column="column5">inning</th>
+								<th class="column100 column6" data-column="column6">o</th>
+								<th class="column100 column7" data-column="column7">p_score</th>
+								<th class="column100 column8" data-column="column8">p_throws</th>
+								<th class="column100 column9" data-column="column9">pitcher_id</th>
+								<th class="column100 column10" data-column="column10">stand</th>
+								<th class="column100 column11" data-column="column11">top</th>
+                                <th class="column100 column12" data-column="column12">px</th>
+								<th class="column100 column13" data-column="column13">pz</th>
+								<th class="column100 column14" data-column="column14">start_speed</th>
+                                <th class="column100 column15" data-column="column15">end_speed</th>
+								<th class="column100 column16" data-column="column16">spin_rate</th>
+								<th class="column100 column17" data-column="column17">spin_dir</th>
+								<th class="column100 column18" data-column="column18">break_angle</th>
+								<th class="column100 column19" data-column="column19">break_length</th>
+								<th class="column100 column20" data-column="column20">break_y</th>
+								<th class="column100 column21" data-column="column21">ax</th>
+								<th class="column100 column22" data-column="column22">ay</th>
+								<th class="column100 column23" data-column="column23">az</th>
+                                <th class="column100 column24" data-column="column24">sz_bot</th>
+								<th class="column100 column25" data-column="column25">sz_top</th>
+								<th class="column100 column26" data-column="column26">type_confidence</th>
+                                <th class="column100 column27" data-column="column27">vx0</th>
+								<th class="column100 column28" data-column="column28">vy0</th>
+								<th class="column100 column29" data-column="column29">vz0</th>
+								<th class="column100 column30" data-column="column30">x</th>
+								<th class="column100 column31" data-column="column31">x0</th>
+								<th class="column100 column32" data-column="column32">y</th>
+								<th class="column100 column33" data-column="column33">y0</th>
+								<th class="column100 column34" data-column="column34">z0</th>
+								<th class="column100 column35" data-column="column35">pfx_x</th>
+                                <th class="column100 column36" data-column="column36">pfx_z</th>
+								<th class="column100 column37" data-column="column37">nasty</th>
+								<th class="column100 column38" data-column="column38">zone</th>
+								<th class="column100 column39" data-column="column39">code</th>
+								<th class="column100 column40" data-column="column40">type</th>
+								<th class="column100 column41" data-column="column41">pitch_type</th>
+								<th class="column100 column42" data-column="column42">event_num</th>
+								<th class="column100 column43" data-column="column43">b_score</th>
+                                <th class="column100 column44" data-column="column44">b_count</th>
+								<th class="column100 column45" data-column="column45">s_count</th>
+								<th class="column100 column46" data-column="column46">outs</th>
+								<th class="column100 column47" data-column="column47">pitch_num</th>
+								<th class="column100 column48" data-column="column48">on_1b</th>
+                                <th class="column100 column49" data-column="column49">on_2b</th>
+                                <th class="column100 column50" data-column="column50">on_3b</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if pitch_data %}  
+							{% for row in pitch_data %}
+							<tr>
+								<td class="column100 column1" data-column="column1">{{row.id}}</td>
+								<td class="column100 column2" data-column="column2">{{row.ab_id}}</td>
+								<td class="column100 column3" data-column="column3">{{row.batter_id}}</td>
+                                <td class="column100 column3" data-column="column3">{{row.event}}</td>
+								<td class="column100 column4" data-column="column4">{{row.g_id}}</td>
+								<td class="column100 column5" data-column="column5">{{row.inning}}</td>
+								<td class="column100 column6" data-column="column6">{{row.o}}</td>
+								<td class="column100 column7" data-column="column7">{{row.p_score}}</td>
+								<td class="column100 column8" data-column="column8">{{row.p_throws}}</td>
+								<td class="column100 column9" data-column="column9">{{row.pitcher_id}}</td>
+								<td class="column100 column10" data-column="column10">{{row.stand}}</td>
+								<td class="column100 column11" data-column="column11">{{row.top}}</td>
+                                <td class="column100 column12" data-column="column12">{{row.px}}</td>
+								<td class="column100 column13" data-column="column13">{{row.pz}}</td>
+								<td class="column100 column14" data-column="column14">{{row.start_speed}}</td>
+                                <td class="column100 column15" data-column="column15">{{row.end_speed}}</td>
+								<td class="column100 column16" data-column="column16">{{row.spin_rate}}</td>
+								<td class="column100 column17" data-column="column17">{{row.spin_dir}}</td>
+								<td class="column100 column18" data-column="column18">{{row.break_angle}}</td>
+								<td class="column100 column19" data-column="column19">{{row.break_length}}</td>
+								<td class="column100 column20" data-column="column20">{{row.break_y}}</td>
+								<td class="column100 column21" data-column="column21">{{row.ax}}</td>
+								<td class="column100 column22" data-column="column22">{{row.ay}}</td>
+								<td class="column100 column23" data-column="column23">{{row.az}}</td>
+                                <td class="column100 column24" data-column="column24">{{row.sz_bot}}</td>
+								<td class="column100 column25" data-column="column25">{{row.sz_top}}</td>
+								<td class="column100 column26" data-column="column26">{{row.type_confidence}}</td>
+                                <td class="column100 column27" data-column="column27">{{row.vx0}}</td>
+								<td class="column100 column28" data-column="column28">{{row.vy0}}</td>
+								<td class="column100 column29" data-column="column29">{{row.vz0}}</td>
+								<td class="column100 column30" data-column="column30">{{row.x}}</td>
+								<td class="column100 column31" data-column="column31">{{row.x0}}</td>
+								<td class="column100 column32" data-column="column32">{{row.y}}</td>
+								<td class="column100 column33" data-column="column33">{{row.y0}}</td>
+								<td class="column100 column34" data-column="column34">{{row.z0}}</td>
+								<td class="column100 column35" data-column="column35">{{row.pfx_x}}</td>
+                                <td class="column100 column36" data-column="column36">{{row.pfx_z}}</td>
+								<td class="column100 column37" data-column="column37">{{row.nasty}}</td>
+								<td class="column100 column38" data-column="column38">{{row.zone}}</td>
+								<td class="column100 column39" data-column="column39">{{row.code}}</td>
+								<td class="column100 column40" data-column="column40">{{row.type}}</td>
+								<td class="column100 column41" data-column="column41">{{row.pitch_type}}</td>
+								<td class="column100 column42" data-column="column42">{{row.event_num}}</td>
+								<td class="column100 column43" data-column="column43">{{row.b_score}}</td>
+                                <td class="column100 column44" data-column="column44">{{row.b_count}}</td>
+								<td class="column100 column45" data-column="column45">{{row.s_count}}</td>
+								<td class="column100 column46" data-column="column46">{{row.outs}}</td>
+								<td class="column100 column47" data-column="column47">{{row.pitch_num}}</td>
+								<td class="column100 column48" data-column="column48">{{row.on_1b}}</td>
+                                <td class="column100 column49" data-column="column49">{{row.on_2b}}</td>
+                                <td class="column100 column50" data-column="column50">{{row.on_3b}}</td>
+							</tr>
+							{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!--===============================================================================================-->	
+	<script src="{% static 'dashboard/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/js/main.js' %}"></script>
+
+</body>
+</html>
