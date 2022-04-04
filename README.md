@@ -1,5 +1,4 @@
 # Environment Setup
-===================
 
 Below, you will find instructions for the basic setup steps required to run the application on your local environment. 
 This involves database setup and population, package/dependency installations, and other necessary configurations.
