@@ -15,7 +15,6 @@ LOAD DATA
 
 -- Should be 740389 lines
     
-    
 -- Load pitch data from pitches.csv 
 LOAD DATA 
 	INFILE '/Users/alanxu/mlb_pitch_data/raw_data/pitches.csv' IGNORE
@@ -27,13 +26,14 @@ LOAD DATA
     
 -- Should be 2867154 lines (certain rows truncated because bad data)
 
+-- Need to run this after pitches creation, as the original data set does not have a pk and Pythons MySQL API requires that there is a pk
+ALTER TABLE pitches ADD id INT PRIMARY KEY AUTO_INCREMENT;
 
 -- Populate Megatable (pitch_data)
-INSERT INTO pitch_data (`id`,`ab_id`, `batter_id`, `event`, `g_id`, `inning`, `o`,`p_score`,`p_throws`,
-  `pitcher_id`,`stand`,`top`,`px`,`pz`,`start_speed`,`end_speed`,`spin_rate`,`spin_dir`,`break_angle`,`break_length`, `break_y`,`ax`, `ay`, `az`,
-  `sz_bot`,  `sz_top`,  `type_confidence`,  `vx0`,  `vy0`,  `vz0`,  `x`,  `x0`,`y`,`y0`,`z0`,`pfx_x`,
-  `pfx_z`,`nasty`,`zone`,`code`,`type`,`pitch_type`,`event_num`,`b_score`, `b_count`, `s_count`, `outs`,
-  `pitch_num`, `on_1b`, `on_2b`, `on_3b`)
+INSERT INTO pitch_data (`id`,`ab_id`, `batter_id`, `event`, `g_id`, `inning`, `o`,`p_score`,`p_throws`, `pitcher_id`,
+  `stand`,`top`,`px`,`pz`,`start_speed`,`end_speed`,`spin_rate`,`spin_dir`,`break_angle`,`break_length`, `break_y`, `ax`, `ay`,
+  `az`, `sz_bot`,  `sz_top`,  `type_confidence`,  `vx0`,  `vy0`,  `vz0`,  `x`,  `x0`,`y`,`y0`,`z0`,`pfx_x`, `pfx_z`, `nasty`,`zone`,
+  `code`,`type`,`pitch_type`,`event_num`,`b_score`, `b_count`, `s_count`, `outs`, `pitch_num`, `on_1b`, `on_2b`, `on_3b`)
 SELECT 
   p.`id`, a.`ab_id`, a.`batter_id`, a.`event`, a.`g_id`, a.`inning`, a.`o`,a.`p_score`,a.`p_throws`,
   a.`pitcher_id`,a.`stand`,a.`top`,p.`px`,p.`pz`,p.`start_speed`,p.`end_speed`,p.`spin_rate`,p.`spin_dir`,
@@ -43,8 +43,11 @@ SELECT
   p.`pitch_num`, p.`on_1b`, p.`on_2b`, p.`on_3b`
 FROM pitches p JOIN atbats a USING (ab_id);
 
+-- SELECT statements
+-- --------------------- --
 -- SELECT COUNT(*) FROM atbats;
-SELECT * FROM pitches JOIN atbats USING(ab_id) limit 50;
+-- SELECT * FROM pitches JOIN atbats USING(ab_id) limit 50;
+-- SELECT * FROM pitch_data LIMIT 100;
 
 
 
