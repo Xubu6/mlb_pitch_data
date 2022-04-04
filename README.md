@@ -10,7 +10,7 @@ We modeled our schema, `pitch_data`, to reflect this decomposition. The two tabl
 
 To create the schema and tables, run the SQL script in `/scripts/create_pitch_schema_tables.sql`, which will create the `pitch_data` schema containing tables:
 
-* `pitch_data.pitch_data` (Megatable)
+* `pitch_data` (Megatable)
 * `pitches`
 * `at_bats`. 
 
