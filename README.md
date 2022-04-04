@@ -12,7 +12,7 @@ To create the schema and tables, run the SQL script in `/scripts/create_pitch_sc
 
 * `pitch_data` (Megatable)
 * `pitches`
-* `at_bats`. 
+* `at_bats` 
 
 
 Now run the SQL script in `/scripts/load_pitch_data.sql`, which will populate all three tables. After insertion, the `atbats` table should have 740,390 rows and the `pitches` and `pitches_data` tables should have 2,867,154 rows.
@@ -32,8 +32,8 @@ For the client side app, we are using Python with the Django framework to visual
 
 The app should be automatically configured to connect to your local MySQL connection; however, if any of the database connection parameters are different, you can specify them in `/app/settings.py` under `DATABASES = { 'default': { ... }}`. Once the app is connected to the database, we have to create and run the necessary migrations (in the root app directory):
 
-* python manage.py makemigrations
-* python manage.py migrate
+* `python manage.py makemigrations`
+* `python manage.py migrate`
 
 
 Once the migrations have completed, the server can be started using:
