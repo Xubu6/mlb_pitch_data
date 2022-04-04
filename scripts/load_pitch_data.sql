@@ -1,6 +1,6 @@
 -- Alan Xu, Jai Bansal
 -- DBMS Project 2
--- Run this SQL script to load data sets into the tables `atbats` and `pitches`
+-- Run this SQL script to load data sets into the tables `atbats` and `pitches` and `pitch_data`
 
 USE `pitch_data`;
 

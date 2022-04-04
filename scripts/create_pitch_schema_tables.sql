@@ -1,6 +1,6 @@
 -- Alan Xu, Jai Bansal
 -- DBMS Project 2
--- Run this SQL script to create the Schema `pitch_data` and the tables `atbats` and `pitches`
+-- Run this SQL script to create the Schema `pitch_data` and the tables `pitch_data`, `atbats`, and `pitches`
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
