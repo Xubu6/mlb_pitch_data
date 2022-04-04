@@ -30,7 +30,17 @@ For the client side app, we are using Python with the Django framework to visual
 * MySQL Client: `pip install mysqlclient`
 
 
-The app should be automatically configured to connect to your local MySQL connection; however, if any of the database connection parameters are different, you can specify them in `/app/settings.py` under `DATABASES = { 'default': { ... }}`. Once the app is connected to the database, we have to create and run the necessary migrations (in the root app directory):
+The app should be automatically configured to connect to your local MySQL connection; however, if any of the database connection parameters are different, you can specify them in `/app/settings.py` under: 
+
+```
+DATABASES = { 
+    'default': { 
+        ... 
+    }
+}
+``` 
+
+Once the app is connected to the database, we have to create and run the necessary migrations (in the root app directory):
 
 * `python manage.py makemigrations`
 * `python manage.py migrate`
