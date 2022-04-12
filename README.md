@@ -26,8 +26,14 @@ After running the two scripts, your local MySQL environment should be fully set 
 For the client side app, we are using Python with the Django framework to visualize our data. Below you can find the required installations for Mac OS:
 
 * Python3: `brew install python`
+* Django: `pip install django`
 * MySQL: `brew install mysql`
 * MySQL Client: `pip install mysqlclient`
+
+
+Now, activate the virtual environment by running:
+
+`python manage.py startapp <app name>`
 
 
 The app should be automatically configured to connect to your local MySQL connection; however, if any of the database connection parameters are different, you can specify them in `/app/settings.py` under: 
