@@ -1,5 +1,14 @@
 from django.db import models
 
+class PlayerNames(models.Model):
+    id = models.IntegerField(primary_key=True)
+    first_name = models.CharField(max_length=45, blank=True, null=True)
+    last_name = models.CharField(max_length=45, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
+
 # Model for Table atbats
 class Atbats(models.Model):
     ab_id = models.IntegerField(primary_key=True)
@@ -183,6 +192,7 @@ class DjangoSession(models.Model):
 class PitchData(models.Model):
     ab_id = models.IntegerField()
     batter_id = models.IntegerField(blank=True, null=True)
+    batter_name = models.CharField(max_length=55, blank=True, null=True)
     event = models.CharField(max_length=20, blank=True, null=True)
     g_id = models.IntegerField(blank=True, null=True)
     inning = models.IntegerField(blank=True, null=True)
@@ -190,6 +200,7 @@ class PitchData(models.Model):
     p_score = models.IntegerField(blank=True, null=True)
     p_throws = models.CharField(max_length=2, blank=True, null=True)
     pitcher_id = models.IntegerField(blank=True, null=True)
+    pitcher_name = models.CharField(max_length=55, blank=True, null=True)
     stand = models.CharField(max_length=2, blank=True, null=True)
     top = models.CharField(max_length=10, blank=True, null=True)
     px = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)

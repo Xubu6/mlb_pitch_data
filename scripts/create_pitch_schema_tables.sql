@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `pitch_data`.`pitch_data` (
   `id` INT(11) PRIMARY KEY,
   `ab_id` INT(11) NOT NULL,
   `batter_id` INT(11) NULL,
+  `batter_name` VARCHAR(55),
   `event` VARCHAR(20) NULL,
   `g_id` INT(11) NULL,
   `inning` TINYINT NULL,
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `pitch_data`.`pitch_data` (
   `p_score` TINYINT NULL,
   `p_throws` CHAR(2) NULL,
   `pitcher_id` INT(11) NULL,
+  `pitcher_name` VARCHAR(55),
   `stand` CHAR(2) NULL,
   `top` VARCHAR(10) NULL,
   `px` DECIMAL(4,3) NULL,
@@ -67,6 +69,16 @@ CREATE TABLE IF NOT EXISTS `pitch_data`.`pitch_data` (
   `on_3b` TINYINT NULL)
 ENGINE = InnoDB;
 
+-- Create table `pitch_data`.`player_names`
+DROP TABLE IF EXISTS `pitch_data`.`player_names` ;
+
+CREATE TABLE IF NOT EXISTS `pitch_data`.`player_names` (
+  `id` INT NOT NULL,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 -- Create table `pitch_data`.`atbats`
 DROP TABLE IF EXISTS `pitch_data`.`atbats` ;
 
@@ -82,7 +94,19 @@ CREATE TABLE IF NOT EXISTS `pitch_data`.`atbats` (
   `pitcher_id` INT(11) NULL,
   `stand` CHAR(2) NULL,
   `top` VARCHAR(10) NULL,
-  PRIMARY KEY (`ab_id`))
+  PRIMARY KEY (`ab_id`),
+  INDEX `fk_batter_id_idx` (`batter_id` ASC),
+  INDEX `fk_pitcher_id_idx` (`pitcher_id` ASC),
+  CONSTRAINT `fk_batter_id`
+    FOREIGN KEY (`batter_id`)
+    REFERENCES `pitch_data`.`player_names` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pitcher_id`
+    FOREIGN KEY (`pitcher_id`)
+    REFERENCES `pitch_data`.`player_names` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- Create table `pitch_data`.`pitches`
@@ -136,7 +160,6 @@ CREATE TABLE IF NOT EXISTS `pitch_data`.`pitches` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
