@@ -65,7 +65,7 @@ JOIN player_names pn2 ON (a.pitcher_id = pn2.id);
 -- SELECT * FROM pitches JOIN atbats USING(ab_id) limit 50;
 -- SELECT * FROM pitch_data LIMIT 100;
 
-SELECT * FROM player_names LIMIT 50;
+SELECT * FROM pitch_data LIMIT 50;
 
 
 
