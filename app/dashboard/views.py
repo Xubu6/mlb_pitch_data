@@ -8,7 +8,7 @@ from .models import Atbats, Pitches, PitchData
 
 def home(request):
     with connection.cursor() as cursor:
-        cursor.callproc('spin_rate_leaderboard', ['CU', 200])
+        cursor.callproc('spin_rate_leaderboard', [200])
     sp_data = cursor.fetchall();
     context = {}
     return render(request, 'dashboard/home.html', context)
