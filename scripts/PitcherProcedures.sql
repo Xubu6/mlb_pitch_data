@@ -23,7 +23,7 @@ BEGIN
 END //
 
 
-CALL pitch_spin_rate_leaderboard('SL',500);
+CALL pitch_spin_rate_leaderboard('FF',500);
 
 -- Pitch / Start Speed Leaderboard
 
