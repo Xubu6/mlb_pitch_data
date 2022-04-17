@@ -34,16 +34,20 @@
 				<div class="table100 ver5 m-b-110">
 					<table data-vertable="ver5">
 						<thead>
+                            {% if attr_list %}
 							<tr class="row100 head">
-								<th class="column100 column1" data-column="column1">{{ sp_name_formatted }}</th>
+                                {% for attr in attr_list %}
+								<th class="column100 column3" data-column="column3">{{ attr }}</th>
+                                {% endfor %}
 							</tr>
+                            {% endif %}
 						</thead>
 						<tbody>
 							{% if sp_data %}
 							{% for row in sp_data %}
 							<tr>
                                 {% for attr in row %}
-								<td class="column100 column1" data-column="column1">{{attr}}</td>
+								<td class="column100 column2" data-column="column2">{{attr}}</td>
                                 {% endfor %}
 							</tr>
 							{% endfor %}
@@ -53,6 +57,12 @@
 				</div>
 			</div>
 		</div>
+        <form action="{% url 'sp_detail' sp_name=sp_name page_num=prev_page %}" method="POST">
+            <input id="submit" type="submit" value="Previous" />
+        </form>
+        <form action="{% url 'sp_detail' sp_name=sp_name page_num=next_page %}" method="POST">
+            <input id="submit" type="submit" value="Next" />
+        </form>
 	</div>
 
 

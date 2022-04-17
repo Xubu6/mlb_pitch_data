@@ -14,26 +14,38 @@ def home(request):
     return render(request, 'dashboard/home.html', context)
 
 def sp(request, sp_name):
+    sp_params = ['SL', 500]
     with connection.cursor() as cursor:
-        cursor.callproc(sp_name, [100])
-    sp_data = cursor.fetchall()[:50];
+        cursor.callproc(sp_name, sp_params)
+        sp_data = cursor.fetchall()[:50];
+        attr_list = [attr[0] for attr in cursor.description]
     context = {
         'sp_data': sp_data,
+        'attr_list': attr_list,
         'sp_name': sp_name,
-        'sp_name_formatted': sp_name.replace("_", " ").title()
+        'sp_name_formatted': sp_name.replace("_", " ").title(),
+        'page_num': 0,
+        'prev_page': 0,
+        'next_page': 1
     }
     return render(request, 'dashboard/sp.html', context)
 
 def sp_detail(request, page_num, sp_name):
-    with connection.cursor() as cursor:
-        cursor.callproc(sp_name, [100])
+    sp_params = ['SL', 500]
     start_index = page_num * 50
     end_index = start_index + 50
-    sp_data = cursor.fetchall()[start_index:end_index];
+    with connection.cursor() as cursor:
+        cursor.callproc(sp_name, sp_params)
+        sp_data = cursor.fetchall()[start_index:end_index]
+        attr_list = [attr[0] for attr in cursor.description]
     context = {
         'sp_data': sp_data,
+        'attr_list': attr_list,
         'sp_name': sp_name,
-        'sp_name_formatted': sp_name.replace("_", " ").title()
+        'sp_name_formatted': sp_name.replace("_", " ").title(),
+        'page_num': page_num,
+        'prev_page': page_num - 1,
+        'next_page': page_num + 1
     }
     return render(request, 'dashboard/sp.html', context)
 
