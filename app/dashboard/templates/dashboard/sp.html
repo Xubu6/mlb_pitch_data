@@ -27,9 +27,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
 <!--===============================================================================================-->
-	<h2 style="text-align: center; font-family: 'Quicksand', sans-serif; font-size: 46px; padding-top: 25px">{{ sp_name_formatted }}</h2>
+	<h2 style="text-align: center; font-family: 'Quicksand', sans-serif; background-color: lightgray; font-size: 46px; padding-top: 25px">{{ sp_name_formatted }}</h2>
 
-    <hr>
 </head>
 <body>
 	{% block navbar %}
@@ -63,13 +62,16 @@
 					</table>
 				</div>
 			</div>
+            <span style="display: flex; margin-left: auto; background-color: lightgray;">
+                <div style="padding: 5px; margin-top: 0.5em">Showing {{ start_index }}-{{ end_index }} of {{ total_rows }} results</div>
+                <form action="{% url 'sp_detail' sp_name=sp_name page_num=prev_page %}" style="padding-right: 5px" method="POST">
+                    <button type="button" class="btn btn-secondary">Previous</button>
+                </form>
+                <a href="{% url 'sp_detail' sp_name=sp_name page_num=next_page %}">
+                    <button type="button" class="btn btn-secondary">Next</button>
+                </a>
+            </span>
 		</div>
-        <form action="{% url 'sp_detail' sp_name=sp_name page_num=prev_page %}" method="POST">
-            <input id="submit" type="submit" value="Previous" />
-        </form>
-        <form action="{% url 'sp_detail' sp_name=sp_name page_num=next_page %}" method="POST">
-            <input id="submit" type="submit" value="Next" />
-        </form>
 	</div>
     <footer>
         <p style="text-align: center; background-color: lightgray; padding-bottom: 5px;">&copy; Alan Xu, Jai Bansal</p>
