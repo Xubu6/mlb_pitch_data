@@ -1,3 +1,4 @@
+from tempfile import tempdir
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
@@ -7,11 +8,25 @@ from .models import Atbats, Pitches, PitchData
 # Create your views here.
 
 def home(request):
-    with connection.cursor() as cursor:
-        cursor.callproc('spin_rate_leaderboard', [200])
-    sp_data = cursor.fetchall();
-    context = {}
+    temp_data = {
+        'Welcome to the Home Page!',
+        'Explore the site!',
+        'Play around with our advanced features!'
+    }
+    context = {
+        'temp_data': temp_data
+    }
     return render(request, 'dashboard/home.html', context)
+
+def stats(request):
+    temp_data = {
+        'Welcome to the Advanced Stats Page!',
+        'We will eventually have a user input form here where you can try out our different features'
+    }
+    context = {
+        'temp_data': temp_data
+    }
+    return render(request, 'dashboard/stats.html', context)
 
 def sp(request, sp_name):
     sp_params = ['SL', 500]

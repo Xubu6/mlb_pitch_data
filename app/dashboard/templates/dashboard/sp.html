@@ -7,7 +7,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+    <link rel="icon" type="image/svg" href="{% static 'dashboard/images/icons/mlb_logo.svg' %}"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/bootstrap/css/bootstrap.min.css' %}">
 <!--===============================================================================================-->
@@ -22,7 +22,14 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'dashboard//css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
 <!--===============================================================================================-->
-	<h2 style="text-align: center; font-family: Montserrat-Medium; background-color: lightgrey; font-size: 46px; padding-top: 25px">{{ sp_name_formatted }}</h2>
+    <!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+<!--===============================================================================================-->
+	<h2 style="text-align: center; font-family: 'Quicksand', sans-serif; font-size: 46px; padding-top: 25px">{{ sp_name_formatted }}</h2>
+
+    <hr>
 </head>
 <body>
 	{% block navbar %}
@@ -64,6 +71,9 @@
             <input id="submit" type="submit" value="Next" />
         </form>
 	</div>
+    <footer>
+        <p style="text-align: center; background-color: lightgray; padding-bottom: 5px;">&copy; Alan Xu, Jai Bansal</p>
+    </footer>
 
 
 <!--===============================================================================================-->	
