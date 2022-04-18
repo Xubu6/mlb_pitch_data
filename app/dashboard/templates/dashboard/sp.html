@@ -64,9 +64,9 @@
 			</div>
             <span style="display: flex; margin-left: auto; background-color: lightgray;">
                 <div style="padding: 5px; margin-top: 0.5em">Showing {{ start_index }}-{{ end_index }} of {{ total_rows }} results</div>
-                <form action="{% url 'sp_detail' sp_name=sp_name page_num=prev_page %}" style="padding-right: 5px" method="POST">
+                <a href="{% url 'sp_detail' sp_name=sp_name page_num=prev_page %}" style="padding-right: 5px">
                     <button type="button" class="btn btn-secondary">Previous</button>
-                </form>
+                </a>
                 <a href="{% url 'sp_detail' sp_name=sp_name page_num=next_page %}">
                     <button type="button" class="btn btn-secondary">Next</button>
                 </a>
