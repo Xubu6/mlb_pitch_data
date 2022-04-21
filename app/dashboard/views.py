@@ -150,9 +150,9 @@ def atbats_detail(request, page_num):
     total_rows = 740389
     context = {
         'at_bats': at_bats,
-        'page_num': 0,
-        'prev_page': 0,
-        'next_page': 1,
+        'page_num': page_num,
+        'prev_page': 0 if page_num == 0 else page_num - 1,
+        'next_page': page_num + 1,
         'start_index': start_index,
         'end_index': end_index,
         'total_rows': total_rows
