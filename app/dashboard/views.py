@@ -1,11 +1,28 @@
 from tempfile import tempdir
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
-from django.core import serializers
 from django.db import connection
 from .models import Atbats, Pitches, PitchData
 
 # Create your views here.
+
+pitch_types = {
+    'CH': 'Changeup',
+    'CU': 'Curveball',
+    'EP': 'Eephus',
+    'FC': 'Cutter',
+    'FF': 'Four-seam Fastball',
+    'FO': 'Pitchout',
+    'FS': 'Splitter',
+    'FT': 'Two-seam Fastball',
+    'IN': 'Intentional Ball',
+    'KC': 'Knuckle Curve',
+    'KN': 'Knuckleball',
+    'PO': 'Pitchout',
+    'SC': 'Screwball',
+    'SI': 'Sinker',
+    'SL': 'Slider',
+    'UN': 'Unknown'
+}
 
 def home(request):
     temp_data = {
@@ -38,11 +55,12 @@ def sp(request, sp_name):
         total_rows = len(sp_data_full)
         sp_data = sp_data_full[start_index:end_index];
         attr_list = [attr[0] for attr in cursor.description]
+        sp_name_formatted = sp_name.replace("_", " ").title() + ' for ' + pitch_types[sp_params[0]] if len(sp_params) > 1 else sp_name.replace("_", " ").title()
     context = {
         'sp_data': sp_data,
         'attr_list': attr_list,
         'sp_name': sp_name,
-        'sp_name_formatted': sp_name.replace("_", " ").title(),
+        'sp_name_formatted': sp_name_formatted,
         'page_num': 0,
         'prev_page': 0,
         'next_page': 1,
@@ -62,11 +80,12 @@ def sp_detail(request, page_num, sp_name):
         total_rows = len(sp_data_full)
         sp_data = sp_data_full[start_index:end_index]
         attr_list = [attr[0] for attr in cursor.description]
+        sp_name_formatted = sp_name.replace("_", " ").title() + ' — Pitch Type: ' + pitch_types[sp_params[0]] if len(sp_params) > 1 else sp_name.replace("_", " ").title()
     context = {
         'sp_data': sp_data,
         'attr_list': attr_list,
         'sp_name': sp_name,
-        'sp_name_formatted': sp_name.replace("_", " ").title(),
+        'sp_name_formatted': sp_name_formatted,
         'page_num': page_num,
         'prev_page': 0 if page_num == 0 else page_num - 1,
         'next_page': page_num + 1,

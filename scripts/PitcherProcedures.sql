@@ -212,7 +212,7 @@ DROP PROCEDURE IF EXISTS pitcher_pitch_info;
 
 DELIMITER //
 
-CREATE PROCEDURE pitcher_pitch_info(IN pitch_name_param VARCHAR(55), IN pitch_type_param CHAR(3))
+CREATE PROCEDURE pitcher_pitch_info(IN pitch_type_param CHAR(3), IN pitch_name_param VARCHAR(55))
 
 BEGIN
 
@@ -223,7 +223,7 @@ BEGIN
 
 END //
 
-CALL pitcher_pitch_info('Aroldis Chapman', 'FF');
+CALL pitcher_pitch_info('FF', 'Aroldis Chapman');
 
 
  
