@@ -75,6 +75,15 @@
 					</table>
 				</div>
 			</div>
+			<span style="display: flex; margin-left: auto; background-color: lightgray;">
+                <div style="padding: 5px; margin-top: 0.5em">Showing {{ start_index }}-{{ end_index }} of {{ total_rows }} results</div>
+                <a href="{% url 'atbats_detail' page_num=prev_page %}" style="padding-right: 5px">
+                    <button type="button" class="btn btn-secondary">Previous</button>
+                </a>
+                <a href="{% url 'atbats_detail' page_num=next_page %}">
+                    <button type="button" class="btn btn-secondary">Next</button>
+                </a>
+            </span>
 		</div>
 	</div>
 	<footer>

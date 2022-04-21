@@ -59,6 +59,12 @@ JOIN player_names pn1 ON (a.batter_id = pn1.id)
 JOIN player_names pn2 ON (a.pitcher_id = pn2.id);
 
 
+-- Load Data into decomoposed pitch_analysis table
+INSERT INTO pitch_analysis (`id`, `ab_id`, `batter_id`, `batter_name`, `event`, `pitcher_id`, `pitcher_name`, `stand`, `top`, `px`, `pz`, `start_speed`, `end_speed`, `spin_rate`, `spin_dir`, `break_angle`, `break_length`, `break_y`, `nasty`, `zone`, `code`, `type`, `pitch_type` )
+SELECT `id`, `ab_id`, `batter_id`, `batter_name`, `event`, `pitcher_id`, `pitcher_name`, `stand`, `top`, `px`, `pz`, `start_speed`, `end_speed`, `spin_rate`, `spin_dir`, `break_angle`, `break_length`, `break_y`, `nasty`, `zone`, `code`, `type`, `pitch_type` 
+FROM pitch_data;
+
+
 -- SELECT statements
 -- --------------------- --
 -- SELECT COUNT(*) FROM atbats;
@@ -66,6 +72,8 @@ JOIN player_names pn2 ON (a.pitcher_id = pn2.id);
 -- SELECT * FROM pitch_data LIMIT 100;
 
 SELECT * FROM pitch_data LIMIT 50;
+
+SELECT * FROM pitch_analysis LIMIT 50;
 
 
 

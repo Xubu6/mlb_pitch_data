@@ -14,7 +14,7 @@ CREATE PROCEDURE pitch_spin_rate_leaderboard(IN pitch_type_param CHAR(3), IN sam
 BEGIN
 
 	SELECT pitcher_name, AVG(spin_rate)
-    FROM pitch_data
+    FROM pitch_analysis
     WHERE pitch_type = pitch_type_param
     GROUP BY pitcher_name
     HAVING COUNT(spin_rate) > sample_size
@@ -36,7 +36,7 @@ CREATE PROCEDURE pitch_start_speed_leaderboard(IN pitch_type_param CHAR(3), IN s
 BEGIN
 
 	SELECT pitcher_name, AVG(start_speed)
-    FROM pitch_data
+    FROM pitch_analysis
     WHERE pitch_type = pitch_type_param
     GROUP BY pitcher_name
     HAVING COUNT(start_speed) > sample_size
@@ -57,7 +57,7 @@ CREATE PROCEDURE pitch_break_length_leaderboard(IN pitch_type_param CHAR(3), IN 
 BEGIN
 
 	SELECT pitcher_name, AVG(break_length)
-    FROM pitch_data
+    FROM pitch_analysis
     WHERE pitch_type = pitch_type_param
     GROUP BY pitcher_name
     HAVING COUNT(break_length) > sample_size
@@ -78,7 +78,7 @@ CREATE PROCEDURE pitch_break_y_leaderboard(IN pitch_type_param CHAR(3), IN sampl
 BEGIN
 
 	SELECT pitcher_name, AVG(break_y)
-    FROM pitch_data
+    FROM pitch_analysis
     WHERE pitch_type = pitch_type_param
     GROUP BY pitcher_name
     HAVING COUNT(break_y) > sample_size
@@ -100,7 +100,7 @@ CREATE PROCEDURE pitch_nasty_leaderboard(IN pitch_type_param CHAR(3), IN sample_
 BEGIN
 
 	SELECT pitcher_name, AVG(nasty)
-    FROM pitch_data
+    FROM pitch_analysis
     WHERE pitch_type = pitch_type_param
     GROUP BY pitcher_name
     HAVING COUNT(nasty) > sample_size
@@ -121,7 +121,7 @@ CREATE PROCEDURE nasty_leaderboard(IN sample_size INT)
 BEGIN
 
 	SELECT pitcher_name, AVG(nasty)
-    FROM pitch_data
+    FROM pitch_analysis
     GROUP BY pitcher_name
     HAVING COUNT(nasty) > sample_size
     ORDER BY AVG(nasty) DESC;
@@ -140,7 +140,7 @@ CREATE PROCEDURE spin_rate_leaderboard(IN sample_size INT)
 BEGIN
 
 	SELECT pitcher_name, AVG(spin_rate)
-    FROM pitch_data
+    FROM pitch_analysis
     GROUP BY pitcher_name
     HAVING COUNT(spin_rate) > sample_size
     ORDER BY AVG(spin_rate) DESC;
@@ -159,7 +159,7 @@ CREATE PROCEDURE break_length_leaderboard(IN sample_size INT)
 BEGIN
 
 	SELECT pitcher_name, AVG(break_length)
-    FROM pitch_data
+    FROM pitch_analysis
     GROUP BY pitcher_name
     HAVING COUNT(break_length) > sample_size
     ORDER BY AVG(break_length) DESC;
@@ -179,7 +179,7 @@ CREATE PROCEDURE break_y_leaderboard(IN sample_size INT)
 BEGIN
 
 	SELECT pitcher_name, AVG(break_y)
-    FROM pitch_data
+    FROM pitch_analysis
     GROUP BY pitcher_name
     HAVING COUNT(break_y) > sample_size
     ORDER BY AVG(break_y) DESC;
@@ -198,7 +198,7 @@ CREATE PROCEDURE start_speed_leaderboard(IN sample_size INT)
 BEGIN
 
 	SELECT pitcher_name, AVG(start_speed)
-    FROM pitch_data
+    FROM pitch_analysis
     GROUP BY pitcher_name
     HAVING COUNT(start_speed) > sample_size
     ORDER BY AVG(start_speed) DESC;
@@ -216,8 +216,8 @@ CREATE PROCEDURE pitcher_pitch_info(IN pitch_name_param VARCHAR(55), IN pitch_ty
 
 BEGIN
 
-	SELECT pitch_type, AVG(start_speed), AVG(spin_rate), AVG(break_length), AVG(break_y)
-    FROM pitch_data
+	SELECT pitcher_name, pitch_type, AVG(start_speed), AVG(spin_rate), AVG(break_length), AVG(break_y)
+    FROM pitch_analysis
     WHERE pitcher_name =  pitch_name_param AND pitch_type = pitch_type_param
     GROUP BY pitch_type;
 
