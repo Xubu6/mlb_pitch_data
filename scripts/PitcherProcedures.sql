@@ -225,6 +225,5 @@ END //
 
 CALL pitcher_pitch_info('FF', 'Aroldis Chapman');
 
-
  
     
