@@ -128,6 +128,15 @@ iframe {
   padding: 33px 30px;
 }
 
+.form-container {
+  align-content: center;
+  text-align: center;
+}
+
+option {
+  font-family: 'Quicksand', sans-serif;
+}
+
 .wrap-table100 {
   width: 100vw;
   overflow: scroll;
