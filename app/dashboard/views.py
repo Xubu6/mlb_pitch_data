@@ -107,9 +107,8 @@ def dml(request):
                 params['ab_id'] = request.POST.get("params")
             elif operation == 'update' or operation == 'insert':
                 for attr in attr_list:
-                    cur_attr = request.POST.get(attr) if request.POST.get(attr) != None else '';
-                    params[attr] = (cur_attr)
-                    # print(params[attr])
+                    cur_attr = request.POST.get(attr);
+                    params[attr] = cur_attr if (cur_attr != None and cur_attr != '') else 0;
 
         try:
             if params:
@@ -132,7 +131,8 @@ def dml(request):
                             'top':params['top']
                         }
                     )
-                    obj.save()
+                    obj.save() if obj else created.save();
+                    
                 elif operation == 'insert':
                     new_ab = Atbats.objects.create(
                         ab_id=params['ab_id'],
