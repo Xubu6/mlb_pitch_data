@@ -67,19 +67,33 @@
     {% if sp_name %}
     <form method="post" novalidate>
         <div class="form-group">
-            <label for="param" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: medium; padding-bottom: 10px;">
+            <label for="param" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: large; padding-bottom: 10px;">
                 Input a {{ param_type }} for {{ sp_name_formatted }}
             </label>
             <input type="text" class="form-control" name="param" id="param_form" placeholder="{{ param_type }}" style="width: 25vw; margin: auto; text-align: center; font-family: 'Quicksand', sans-serif; outline: 1px solid black;">
-            <small id="param_form" class="form-text text-muted" style="padding-top: 5px">
-                Pitch types are coded as follows: 
+            {% if param_type == "pitch type (code)" %}
+            <small id="param_form" class="form-text text-muted" style="padding: 15px; width: 25vw; margin: auto; text-align: center;">
+                <u>Pitch types are coded as follows:</u>
+                <div class="row justify-content-center">
                 {% for pitch_type in pitch_types %}
-                <br>{{ pitch_type }}
+                     <div class="col-6 text-center">
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <br>{{ pitch_type }}           
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:2 %}
+                </div>
+                <div class="row justify-content-center">
+                    {% endif %}
                 {% endfor %}
+                </div>
             </small>
+            {% endif %}
           </div>
         <a href="{% url 'sp' sp_name=sp_name sp_param=sp_param %}">
-            <button type="submit" style="background-color: lightgreen; margin-bottom: 10px;" class="btn btn-success">Go!</button>
+            <button type="submit" style="background-color: lightgreen; margin-bottom: 10px; font-size: larger;" class="btn btn-success">Go!</button>
         </a>
     </form>
     {% endif %}
