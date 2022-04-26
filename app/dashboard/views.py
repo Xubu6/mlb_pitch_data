@@ -37,7 +37,7 @@ def stats(request):
     }
     selected_proc = None
     cur_proc_param = None
-    param_type = 'sample size'
+    param_type = 'minimum pitch count'
     can_redirect = False
 
     if request.method == "GET":
@@ -45,8 +45,6 @@ def stats(request):
 
     if selected_proc != None:
         param_type = 'pitch type (code)' if ('pitch' in selected_proc and 'info' not in selected_proc) else param_type
-        # if cur_proc_param != None:
-        #     return redirect ('sp', sp_name=selected_proc, sp_param=cur_proc_param)
 
     if request.method == "POST":
         selected_proc = request.GET.get("procedures")
