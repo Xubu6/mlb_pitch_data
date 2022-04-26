@@ -1,28 +1,8 @@
 from tempfile import tempdir
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db import connection
 from .models import Atbats, Pitches, PitchData
-
-# Create your views here.
-
-pitch_types = {
-    'CH': 'Changeup',
-    'CU': 'Curveball',
-    'EP': 'Eephus',
-    'FC': 'Cutter',
-    'FF': 'Four-seam Fastball',
-    'FO': 'Pitchout',
-    'FS': 'Splitter',
-    'FT': 'Two-seam Fastball',
-    'IN': 'Intentional Ball',
-    'KC': 'Knuckle Curve',
-    'KN': 'Knuckleball',
-    'PO': 'Pitchout',
-    'SC': 'Screwball',
-    'SI': 'Sinker',
-    'SL': 'Slider',
-    'UN': 'Unknown'
-}
+from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
     temp_data = {
@@ -35,18 +15,65 @@ def home(request):
     }
     return render(request, 'dashboard/home.html', context)
 
+@csrf_exempt
 def stats(request):
-    temp_data = {
-        'Welcome to the Advanced Stats Page!',
-        'We will eventually have a user input form here where you can try out our different features'
+    pitch_types = {
+        'CH: Changeup',
+        'CU: Curveball',
+        'EP: Eephus',
+        'FC: Cutter',
+        'FF: Four-seam Fastball',
+        'FO: Pitchout',
+        'FS: Splitter',
+        'FT: Two-seam Fastball',
+        'IN: Intentional Ball',
+        'KC: Knuckle Curve',
+        'KN: Knuckleball',
+        'PO: Pitchout',
+        'SC: Screwball',
+        'SI: Sinker',
+        'SL: Slider',
+        'UN: Unknown'
     }
+    selected_proc = None
+    cur_proc_param = None
+    param_type = 'sample size'
+    can_redirect = False
+
+    if request.method == "GET":
+        selected_proc = request.GET.get("procedures")
+
+    if selected_proc != None:
+        param_type = 'pitch type (code)' if ('pitch' in selected_proc and 'info' not in selected_proc) else param_type
+        # if cur_proc_param != None:
+        #     return redirect ('sp', sp_name=selected_proc, sp_param=cur_proc_param)
+
+    if request.method == "POST":
+        selected_proc = request.GET.get("procedures")
+        cur_proc_param = request.POST.get("param")
+        return redirect ('sp', sp_name=selected_proc, sp_param=cur_proc_param)
+        
+    if selected_proc != None and cur_proc_param != None:
+        can_redirect = True
+
     context = {
-        'temp_data': temp_data
+        'sp_name': selected_proc,
+        'sp_name_formatted': selected_proc.replace("_", " ").title() if selected_proc != None else '',
+        'sp_param': cur_proc_param,
+        'pitch_types': pitch_types,
+        'param_type': param_type,
+        'can_redirect': can_redirect
     }
     return render(request, 'dashboard/stats.html', context)
 
-def sp(request, sp_name):
-    sp_params = ['SL',500]
+@csrf_exempt
+def dml(request):
+    context = {};
+    return render(request, 'dashboard/dml.html', context)
+
+@csrf_exempt
+def sp(request, sp_name, sp_param):
+    sp_params = [sp_param]
     start_index = 0
     end_index = 50
     with connection.cursor() as cursor:
@@ -55,12 +82,13 @@ def sp(request, sp_name):
         total_rows = len(sp_data_full)
         sp_data = sp_data_full[start_index:end_index];
         attr_list = [attr[0] for attr in cursor.description]
-        sp_name_formatted = sp_name.replace("_", " ").title() + ' for ' + pitch_types[sp_params[0]] if len(sp_params) > 1 else sp_name.replace("_", " ").title()
+        sp_name_formatted = sp_name.replace("_", " ").title() + ' (' + sp_param + ')'
     context = {
         'sp_data': sp_data,
         'attr_list': attr_list,
         'sp_name': sp_name,
         'sp_name_formatted': sp_name_formatted,
+        'sp_param': sp_param,
         'page_num': 0,
         'prev_page': 0,
         'next_page': 1,
@@ -70,8 +98,9 @@ def sp(request, sp_name):
     }
     return render(request, 'dashboard/sp.html', context)
 
-def sp_detail(request, page_num, sp_name):
-    sp_params = ['SL',500]
+@csrf_exempt
+def sp_detail(request, page_num, sp_name, sp_param):
+    sp_params = [sp_param]
     start_index = page_num * 50
     end_index = start_index + 50
     with connection.cursor() as cursor:
@@ -80,12 +109,13 @@ def sp_detail(request, page_num, sp_name):
         total_rows = len(sp_data_full)
         sp_data = sp_data_full[start_index:end_index]
         attr_list = [attr[0] for attr in cursor.description]
-        sp_name_formatted = sp_name.replace("_", " ").title() + ' — Pitch Type: ' + pitch_types[sp_params[0]] if len(sp_params) > 1 else sp_name.replace("_", " ").title()
+        sp_name_formatted = sp_name.replace("_", " ").title() + ' (' + sp_param + ')'
     context = {
         'sp_data': sp_data,
         'attr_list': attr_list,
         'sp_name': sp_name,
         'sp_name_formatted': sp_name_formatted,
+        'sp_param': sp_param,
         'page_num': page_num,
         'prev_page': 0 if page_num == 0 else page_num - 1,
         'next_page': page_num + 1,

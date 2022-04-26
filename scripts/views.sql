@@ -1,31 +1,32 @@
+-- Alan Xu, Jai Bansal
+-- DBMS Project 2
+-- Run this SQL script to create the views `pitch_analysis_view` and `2018_pitch_data`
+
 -- Create view `pitch_data`.`pitch_analysis`
-DROP VIEW IF EXISTS `pitch_data`.`pitch_analysis`;
+-- All stored procedures will pull from this view, as it contains the minimal attributes necessary for functionality
 
-CREATE VIEW IF NOT EXISTS `pitch_data`.`pitch_analysis` (
-	`id` INT(11) PRIMARY KEY, 
-    `ab_id` INT(11) NOT NULL, 
-    `batter_id`INT(11) NULL,
-    `batter_name` VARCHAR(55), 
-    `event` VARCHAR(20) NULL, 
-    `pitcher_id` INT(11) NULL, 
-    `pitcher_name` VARCHAR(55), 
-    `stand` CHAR(2) NULL, 
-    `top` VARCHAR(10) NULL, 
-    `px` DECIMAL(4,3) NULL, 
-    `pz` DECIMAL(4,3) NULL, 
-    `start_speed` DECIMAL(10,2) NULL, 
-    `end_speed` DECIMAL(10,2) NULL, 
-    `spin_rate` DECIMAL(10,3) NULL, 
-    `spin_dir` DECIMAL(10,3) NULL, 
-    `break_angle` DECIMAL(3,1) NULL,
-    `break_length` DECIMAL(3,1) NULL, 
-    `break_y` DECIMAL(3,1) NULL, 
-    `nasty` INT(5) NULL, 
-    `zone` INT(5) NULL, 
-    `code` CHAR(3) NULL, 
-    `type` CHAR(2) NULL, 
-    `pitch_type` CHAR(3) NULL)
-ENGINE = InnoDB;
+CREATE OR REPLACE VIEW pitch_analysis_view AS
+SELECT `id`, `ab_id`, `batter_id`, `batter_name`, `event`, `pitcher_id`, `pitcher_name`,
+	`stand`, `top`, `px`, `pz`, `start_speed`, `end_speed`, `spin_rate`, `spin_dir`, 
+    `break_angle`, `break_length`, `break_y`, `nasty`, `zone`, `code`, `type`, `pitch_type` 
+FROM pitch_data
+ORDER BY id;
+
+-- Create view `pitcher_info`;
+-- Average start speeds, spin rates, break lengths, and vertical breaks by all pitchers in the data
+CREATE OR REPLACE VIEW `pitcher_info` AS
+SELECT pitcher_name, AVG(start_speed), AVG(spin_rate), AVG(break_length), AVG(break_y)
+FROM pitch_analysis
+GROUP BY pitcher_name;
+
+-- SELECT * FROM pitcher_info;
 
 
-CREATE VIEW `2018_pitch_data`;
+
+
+
+
+
+
+
+

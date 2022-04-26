@@ -1,45 +1,41 @@
 USE `pitch_data`;
 
--- Triggers
+-- Pitches
+-- This trigger protects against deletion of original, raw data that is important to the site's functionality 
 DROP TRIGGER IF EXISTS pitches_before_delete;
 
 DELIMITER //
 
 CREATE TRIGGER pitches_before_delete
-AFTER UPDATE
+BEFORE DELETE
 ON pitches
 FOR EACH ROW
 BEGIN
-	INSERT INTO atbats(
-		product_id,
-		category_id,
-		product_code,
-		product_name,
-		list_price,
-		discount_percent,
-		date_updated)
-	VALUES(NEW.product_id, NEW.category_id, NEW.product_code, NEW.product_name, NEW.list_price, NEW.discount_percent, NOW());
+	IF OLD.id IN (SELECT id FROM pitch_data) THEN
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'This row cannot be deleted',
+        MYSQL_ERRNO = 1045;
+	END IF;
 END //
 
+-- DELETE FROM pitches WHERE id = 100;
+
 -- Atbats
+-- This trigger protects against deletion of original, raw data that is important to the site's functionality 
 DROP TRIGGER IF EXISTS atbats_before_delete;
 
 DELIMITER //
 
 CREATE TRIGGER atbats_before_delete
-AFTER UPDATE
+BEFORE DELETE
 ON atbats
 FOR EACH ROW
 BEGIN
-	IF NEW.discount_percent > 100 THEN
-		SIGNAL SQLSTATE '22003'
-		SET MESSAGE_TEXT = 'The discount percent is more than 100.',
-        MYSQL_ERRNO = 1264;
-	ELSEIF NEW.discount_percent < 0 THEN
-		SIGNAL SQLSTATE '22003'
-		SET MESSAGE_TEXT = 'The discount percent cannot be a negative value.',
-        MYSQL_ERRNO = 1264;	
-	ELSEIF NEW.discount_percent < 1 THEN
-		SET NEW.discount_percent = NEW.discount_percent * 100;
+	IF OLD.ab_id IN (SELECT ab_id FROM pitch_data) THEN
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'This row cannot be deleted',
+        MYSQL_ERRNO = 1045;
 	END IF;
 END //
+
+-- DELETE FROM atbats WHERE ab_id = 2015001397;
