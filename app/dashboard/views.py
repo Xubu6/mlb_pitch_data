@@ -1,8 +1,12 @@
 from tempfile import tempdir
+from warnings import catch_warnings
 from django.shortcuts import render, redirect
 from django.db import connection
 from .models import Atbats, Pitches, PitchData
 from django.views.decorators.csrf import csrf_exempt
+import time
+import MySQLdb
+
 
 def home(request):
     temp_data = {
@@ -66,7 +70,109 @@ def stats(request):
 
 @csrf_exempt
 def dml(request):
-    context = {};
+    attr_list = [
+        'ab_id', 
+        'batter_id', 
+        'event', 
+        'g_id', 
+        'inning', 
+        'o', 
+        'p_score', 
+        'p_throws',
+        'pitcher_id', 
+        'stand', 
+        'top'
+    ]
+    msg = ''
+    label = ''
+    operation = None
+    params = {}
+    
+    if request.method == "GET":
+        operation = request.GET.get("operation")
+
+    if operation != None:
+        if operation == 'delete':
+            msg = 'Provide the key for the entry to be deleted'
+        elif operation == 'update':
+            msg = 'Provide attribute values for the entry to be updated'
+        else:
+            msg = 'Provide attribute values for the entry to be inserted'
+        label = 'Operation to be attempted: ' + operation.upper()
+    
+    if request.method == "POST":
+        operation = request.GET.get("operation")
+        if operation:
+            if operation == 'delete':
+                params['ab_id'] = request.POST.get("params")
+            elif operation == 'update' or operation == 'insert':
+                for attr in attr_list:
+                    cur_attr = request.POST.get(attr) if request.POST.get(attr) != None else '';
+                    params[attr] = (cur_attr)
+                    # print(params[attr])
+
+        try:
+            if params:
+                if operation == 'delete':
+                    Atbats.objects.filter(ab_id=params['ab_id']).delete()
+                elif operation == 'update':
+                    obj, created = Atbats.objects.update_or_create(
+                        ab_id=params['ab_id'],
+                        defaults = {
+                            'ab_id':params['ab_id'],
+                            'batter_id':params['batter_id'],
+                            'event':params['event'],
+                            'g_id':params['g_id'],
+                            'inning':params['inning'],
+                            'o':params['o'],
+                            'p_score':params['p_score'],
+                            'p_throws':params['p_throws'],
+                            'pitcher_id':params['pitcher_id'],
+                            'stand':params['stand'],
+                            'top':params['top']
+                        }
+                    )
+                    obj.save()
+                elif operation == 'insert':
+                    new_ab = Atbats.objects.create(
+                        ab_id=params['ab_id'],
+                        batter_id=params['batter_id'],
+                        event=params['event'],
+                        g_id=params['g_id'],
+                        inning=params['inning'],
+                        o=params['o'],
+                        p_score=params['p_score'],
+                        p_throws=params['p_throws'],
+                        pitcher_id=params['pitcher_id'],
+                        stand=params['stand'],
+                        top=params['top'],
+                    )
+                    new_ab.save()
+        except (MySQLdb.Error) as e:
+            print(e)
+            msg = 'Could not perform ' + operation.upper() + ' for this table entry!'
+            label = 'AN ERROR OCCURRED'
+            return render(request, 'dashboard/dml.html', {'alert_flag': True, 'success_flag': False, 'error': e})
+        except:
+            msg = 'Could not perform ' + operation.upper() + ' for this table entry!'
+            label = 'AN ERROR OCCURRED'
+
+        if label == 'AN ERROR OCCURRED':
+            return render(request, 'dashboard/dml.html', {'alert_flag': True, 'success_flag': False})
+        else:
+            return render(request, 'dashboard/dml.html', {'alert_flag': True, 'success_flag': True})
+    
+    context = {
+        'attr_list': attr_list,
+        'operation': operation,
+        'operation_msg': operation.title() + ' a table entry' if operation != None else '',
+        'msg': msg,
+        'params': params,
+        'label': label,
+        'alert_flag': False,
+        'success_flag': False,
+        'error': None
+    };
     return render(request, 'dashboard/dml.html', context)
 
 @csrf_exempt

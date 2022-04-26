@@ -41,15 +41,48 @@
     {% include  './navbar.html' %}
 {% endblock %}
 
+{% if alert_flag %}
+    {% if success_flag %}
+    <script>alert("The previous operation was completed successfully.")</script>  
+    {% elif error %} 
+    <script>alert("The previous operation was prevented. Error: {{ error }}")</script>
+    {% else %}
+    <script>alert("The previous operation was prevented.")</script>
+    {% endif %}
+{% endif %}
 <div class="form-container">
     {% block content %}
-    <label for="procedures" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: large;">What would you like to do?</label>
-    <br>
-    <select name="procedures" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="min-width: 20vw; text-align: center; font-family: 'Quicksand', sans-serif;">
-        <option value="delete">Delete a table entry</option>
-        <option value="insert">Insert a table entry</option>
-        <option value="update">Update a table entry</option>
-    </select>
+    <form method="get">
+        <label for="operation" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: large;">What would you like to do?</label>
+        <br>
+        <select name="operation" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="min-width: 25vw; text-align: center; font-family: 'Quicksand', sans-serif; padding: 3px;">
+            <option selected>{{ operation_msg }}</option>
+            <option value="delete">Delete a table entry</option>
+            <option value="insert">Insert a table entry</option>
+            <option value="update">Update a table entry</option>
+        </select>
+        <br>
+        <button type="submit" style="background-color: white; color: black; margin-bottom: 10px;" class="btn btn-secondary">Select</button>
+    </form>
+    <hr>
+    {% if operation and msg %}
+    <form method="post" novalidate>
+        <div class="form-group">
+            <label for="params" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: large; padding-bottom: 10px;">
+                {{ msg }} 
+            </label>
+            {% if operation == 'delete' %}
+                <input type="text" class="form-control" name="params" id="param_form" placeholder="{{ ab_id }}" style="width: 25vw; margin: auto; text-align: center; font-family: 'Quicksand', sans-serif; outline: 1px solid black;">
+            {% else %}
+                {% for attr in attr_list %}
+                <input type="text" class="form-control" name="{{ attr }}" id="param_form" placeholder="{{ attr }}" style="width: 25vw; margin: auto; text-align: center; font-family: 'Quicksand', sans-serif; outline: 1px solid black; margin-bottom: 5px;">
+                {% endfor %}
+            {% endif %}
+            <small id="param_form" class="form-text text-muted" style="padding: 15px; width: 25vw; margin: auto; text-align: center;">{{ label }}</small>
+        </div>
+        <button type="submit" style="background-color: lightgreen; margin-bottom: 10px; font-size: larger;" class="btn btn-success">Go!</button>
+    </form>
+    {% endif %}
     {% endblock %}
 
     <footer>
