@@ -3,7 +3,8 @@
 USE `pitch_data`;
 
 -- Pitch/Spin Rate Leaderboard
-
+-- this SP takes in a parameter that represents the pitch type and returns 
+-- a leaderboard of pitchers with the highest average spin rates for that pitch
 DROP PROCEDURE IF EXISTS pitch_spin_rate_leaderboard;
 
 DELIMITER //
@@ -20,11 +21,12 @@ BEGIN
 
 END //
 
-
+-- Test the above SP
 CALL pitch_spin_rate_leaderboard('FF');
 
 -- Pitch / Start Speed Leaderboard
-
+-- this SP takes in a parameter that represents the pitch type and returns 
+-- a leaderboard of pitchers with the highest average velocities for that pitch
 DROP PROCEDURE IF EXISTS pitch_start_speed_leaderboard;
 
 DELIMITER //
@@ -41,10 +43,14 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL pitch_start_speed_leaderboard('FF');
 
 -- Pitch / Break Length Leaderboard
-
+-- this SP takes in a parameter that represents the pitch type and returns 
+-- a leaderboard of pitchers with the highest average break length for that pitch
 DROP PROCEDURE IF EXISTS pitch_break_length_leaderboard;
 
 DELIMITER //
@@ -61,10 +67,14 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL pitch_break_length_leaderboard('SL');
 
 -- Pitch / Break Y Leaderboard
-
+-- this SP takes in a parameter that represents the pitch type and returns 
+-- a leaderboard of pitchers with the highest average break (y) for that pitch
 DROP PROCEDURE IF EXISTS pitch_break_y_leaderboard;
 
 DELIMITER //
@@ -81,11 +91,15 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL pitch_break_y_leaderboard('FS');
 
 
 -- Pitch / Nasty Leaderboard
-
+-- this SP takes in a parameter that represents the pitch type and returns 
+-- a leaderboard of pitchers with the nastiest stuff for that pitch
 DROP PROCEDURE IF EXISTS pitch_nasty_leaderboard;
 
 DELIMITER //
@@ -102,10 +116,15 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL pitch_nasty_leaderboard('FF');
 
 
 -- General Nasty Leaderboard
+-- this SP takes in a parameter that represents the min pitches to be qualified and returns
+-- a leaderboard of pitchers with the nastiest stuff as long as they have that number of pitches
 DROP PROCEDURE IF EXISTS nasty_leaderboard;
 
 DELIMITER //
@@ -122,9 +141,14 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL nasty_leaderboard(100);
 
 -- General Spin Rate Leaderboard
+-- this SP takes in a parameter that represents the min pitches to be qualified and returns
+-- a leaderboard of pitchers with the best spin rates as long as they have that number of pitches
 DROP PROCEDURE IF EXISTS spin_rate_leaderboard;
 
 DELIMITER //
@@ -141,9 +165,14 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL spin_rate_leaderboard(100);
 
 -- General Break Length Leaderboard
+-- this SP takes in a parameter that represents the min pitches to be qualified and returns
+-- a leaderboard of pitchers with the best break length as long as they have that number of pitches
 DROP PROCEDURE IF EXISTS break_length_leaderboard;
 
 DELIMITER //
@@ -160,10 +189,15 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL break_length_leaderboard(100);
 
 
 -- General Break Y Leaderboard
+-- this SP takes in a parameter that represents the min pitches to be qualified and returns
+-- a leaderboard of pitchers with the best break (y) as long as they have that number of pitches
 DROP PROCEDURE IF EXISTS break_y_leaderboard;
 
 DELIMITER //
@@ -180,9 +214,15 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
+
 CALL break_y_leaderboard(100);
 
 -- General Start Speed Leaderboard
+-- this SP takes in a parameter that represents the min pitches to be qualified and returns
+-- a leaderboard of pitchers with the best velocity as long as they have that number of pitches
 DROP PROCEDURE IF EXISTS start_speed_leaderboard;
 
 DELIMITER //
@@ -199,9 +239,14 @@ BEGIN
 
 END //
 
+DELIMITER ;
+
+-- Test the above SP
 CALL start_speed_leaderboard(100);
 
 -- Pitcher Pitch Info
+-- this SP takes in a parameter to signal type of pitch and another that has the pitcher's name
+-- returns a row of that pitcher's average stats for that type of pitch
 DROP PROCEDURE IF EXISTS pitcher_pitch_info;
 
 DELIMITER //
@@ -217,6 +262,8 @@ BEGIN
 
 END //
 
+DELIMITER ;
+-- test the above sp
 CALL pitcher_pitch_info('FF', 'Aroldis Chapman');
 
     

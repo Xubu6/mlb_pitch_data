@@ -1,6 +1,7 @@
 -- Alan Xu, Jai Bansal
 -- DBMS Project 2
 -- Run this SQL script to load data sets into the tables `atbats` and `pitches` and `pitch_data`
+-- You may have to adjust the locations of the files depending on where they are in your directories
 
 USE `pitch_data`;
 
