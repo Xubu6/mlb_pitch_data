@@ -19,7 +19,13 @@ Now run the SQL script in `/scripts/load_pitch_data.sql`, which will populate al
 
 Due to the size of the datasets, we have not uploaded the original files to GitHub. However, they can be downloaded at: https://www.kaggle.com/datasets/pschale/mlb-pitch-data-20152018. Make sure you place the downloaded files in the `/raw_data` directory.
 
-After running the two scripts, your local MySQL environment should be fully set up for this application.
+Also, you will need to create the triggers, views, and stored procedures that are required for the site to function. They are also located under the `/scripts/` directory. Run them in the following order (after the tables have been created and populated):
+
+* `PitcherProcedures.sql`
+* `views.sql`
+* `triggers.sql`
+
+After running these scripts, your local MySQL environment should be fully set up for this application.
 
 ## Environment/Code Setup
 
@@ -46,15 +52,16 @@ DATABASES = {
 }
 ``` 
 
+You can double check that the database is connected by running `python manage.py inspectdb`, which should provide you Schema information if the db is connected.
+
 Once the app is connected to the database, we have to create and run the necessary migrations (in the root app directory):
 
 * `python manage.py makemigrations`
 * `python manage.py migrate`
 
 
-Once the migrations have completed, the server can be started using:
+Once the migrations have completed, the server can be started from the `/app` directory using:
 
 `python manage.py runserver`
-
 
 The app should now be running at `http://localhost:8000`. 
