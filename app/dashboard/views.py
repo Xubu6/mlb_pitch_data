@@ -8,16 +8,9 @@ import time
 import MySQLdb
 
 
+
 def home(request):
-    temp_data = {
-        'Welcome to the Home Page!',
-        'Explore the site!',
-        'Play around with our advanced features!'
-    }
-    context = {
-        'temp_data': temp_data
-    }
-    return render(request, 'dashboard/home.html', context)
+    return render(request, 'dashboard/home.html')
 
 @csrf_exempt
 def stats(request):
