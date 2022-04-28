@@ -2,7 +2,7 @@ from tempfile import tempdir
 from warnings import catch_warnings
 from django.shortcuts import render, redirect
 from django.db import connection
-from .models import Atbats, Pitches, PitchData
+from .models import Atbats, Pitches, PitchData, PitchAnalysisView, PitcherInfo
 from django.views.decorators.csrf import csrf_exempt
 import time
 import MySQLdb
@@ -324,3 +324,72 @@ def pitches_detail(request, page_num):
         'total_rows': total_rows
     }
     return render(request, 'dashboard/pitches.html', context)
+
+@csrf_exempt
+def pitch_search(request):
+    pitcher_name = None
+    view_type = None
+    show_table = False
+    show_form = True
+
+    if request.method == "POST":
+        pitcher_name = request.POST.get("pitcher_name")
+        view_type = request.POST.get("view_type")
+        print(pitcher_name, ' and ', view_type)
+        return redirect ('pitch_search_detail', pitcher_name=pitcher_name, view_type=view_type, page_num=0)
+
+    context = {
+        'pitcher_name': pitcher_name,
+        'view_type': view_type,
+        'view_type_formatted': view_type.replace("_", " ").title() if view_type else '',
+        'show_form': show_form,
+        'show_table': show_table
+    }
+    return render(request, 'dashboard/pitchsearch.html', context)
+
+@csrf_exempt
+def pitch_search_detail(request, pitcher_name, view_type, page_num):
+    start_index = page_num * 50
+    end_index = start_index + 50
+    show_form = False
+    show_table = True
+
+    if view_type == 'pitch_stats':
+        table_data = PitcherInfo.objects.filter(pitcher_name=pitcher_name)
+        attr_list = [
+            'pitcher_name',
+            'avg_start_speed',
+            'avg_spin_rate',
+            'avg_break_length',
+            'avg_break_y'
+        ]
+    elif view_type == 'all_pitch_data':    
+        table_data = PitchAnalysisView.objects.filter(pitcher_name=pitcher_name)[start_index:end_index]
+        for data in table_data:
+            print('Data: ', data.id, '\n')
+        attr_list = [
+            'pitcher_name', 'id', 'ab_id', 'batter_id', 
+            'batter_name', 'event', 'pitcher_id', 'stand', 
+            'top', 'px', 'pz', 'start_speed', 'end_speed', 
+            'spin_rate', 'spin_dir', 'break_angle', 'break_length', 
+            'break_y', 'nasty', 'zone', 'code', 'type', 'pitch_type'
+        ]
+    else:
+        table_data = []
+        attr_list = []
+        
+    context = {
+        'pitcher_name': pitcher_name,
+        'view_type': view_type,
+        'view_type_formatted': view_type.replace("_", " ").title() if view_type else '',
+        'show_form': show_form,
+        'show_table': show_table,
+        'table_data': table_data,
+        'attr_list': attr_list,
+        'page_num': page_num,
+        'prev_page': 0 if page_num == 0 else page_num - 1,
+        'next_page': page_num + 1,
+        'start_index': start_index,
+        'end_index': end_index
+    }
+    return render(request, 'dashboard/pitchsearch.html', context)

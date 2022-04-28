@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}Pitcher Info Search{% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="icon" type="image/svg" href="{% static 'dashboard/images/icons/mlb_logo.svg' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/main.css' %}">
+    <!-- fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+<!--===============================================================================================-->
+	<h2 style="text-align: center; background-color: lightgray; font-family: 'Quicksand', sans-serif; font-size: 46px; padding-top: 25px">Pitcher Info Search</h2>
+    <hr>
+</head>
+
+<body style="background-color: lightgray !important">
+
+{% block navbar %}
+    {% include  './navbar.html' %}
+{% endblock %}
+
+<div class="form-container" style="background-color: lightgray;">
+    {% block content %}
+    {% if show_form %}
+    <span style="display: inline-block;">
+        <form method="post" novalidate>
+            <div class="form-group">
+                <label for="name_form" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: large;">
+                    Enter a Pitcher's Name
+                </label>
+                <input type="text" class="form-control" name="pitcher_name" id="name_form" placeholder="Aroldis Chapman" style="width: 20vw; margin: auto; text-align: center; font-family: 'Quicksand', sans-serif; outline: 1px solid black;">
+            </div>
+            <div class="form-group">
+                <label for="type_form" style="font-family: 'Quicksand', sans-serif; font-style: oblique; font-size: large;">
+                    What are you searching for?
+                </label>
+                <br>
+                <select name="view_type" id="type_form" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="min-width: 20vw; text-align: center; font-family: 'Quicksand', sans-serif; padding: 7px; border-radius: 5px">
+                    <option selected>{{ view_type_formatted }}</option>
+                    <option value="pitch_stats">Pitch Stats</option>
+                    <option value="all_pitch_data">All Pitch Data</option>
+                </select>
+                <br>
+                <button type="submit" style="background-color: green; color: white; margin-bottom: 10px;" class="btn btn-secondary">Search</button>
+            </div>
+        </form>
+    </span>
+    {% endif %}
+    {% if show_table %}
+    <div class="limiter">
+        <div style="padding-left: 33px; background-color: lightgray; font-style: italic; font-weight: lighter;">Page {{ next_page }} </div>
+		<div class="container-table100-2">
+			<div class="wrap-table100">
+				<div class="table100 ver5 m-b-110">
+					<table data-vertable="ver5">
+						<thead>
+                            {% if attr_list %}
+							<tr class="row100 head">
+                                {% for attr in attr_list %}
+								<th class="column100 column40" data-column="column40">{{ attr }}</th>
+                                {% endfor %}
+							</tr>
+                            {% endif %}
+						</thead>
+						<tbody>
+							{% if table_data %}
+							{% for row in table_data %}
+							<tr style="text-align: left">
+                                {% if view_type == "all_pitch_data" %}
+                                <td class="column100 column1" data-column="column1">{{ row.pitcher_name }}</td>
+								<td class="column100 column7" data-column="column7">{{ row.id }}</td>
+                                <td class="column100 column2" data-column="column2">{{ row.ab_id }}</td>
+                                <td class="column100 column3" data-column="column3">{{ row.batter_id }}</td>
+                                <td class="column100 column4" data-column="column4">{{ row.batter_name }}</td>
+                                <td class="column100 column5" data-column="column5">{{ row.event }}</td>
+                                <td class="column100 column6" data-column="column6">{{ row.pitcher_id }}</td>
+                                <td class="column100 column8" data-column="column8">{{ row.stand }}</td>
+                                <td class="column100 column9" data-column="column9">{{ row.top }}</td>
+                                <td class="column100 column10" data-column="column10">{{ row.px }}</td>
+                                <td class="column100 column11" data-column="column11">{{ row.pz }}</td>
+                                <td class="column100 column12" data-column="column12">{{ row.start_speed }}</td>
+                                <td class="column100 column13" data-column="column13">{{ row.end_speed }}</td>
+                                <td class="column100 column14" data-column="column14">{{ row.spin_rate }}</td>
+                                <td class="column100 column15" data-column="column15">{{ row.spin_dir }}</td>
+                                <td class="column100 column16" data-column="column16">{{ row.break_angle }}</td>
+                                <td class="column100 column17" data-column="column17">{{ row.break_length }}</td>
+                                <td class="column100 column18" data-column="column18">{{ row.break_y }}</td>
+                                <td class="column100 column19" data-column="column19">{{ row.nasty }}</td>
+                                <td class="column100 column20" data-column="column20">{{ row.zone }}</td>
+                                <td class="column100 column21" data-column="column21">{{ row.code }}</td>
+                                <td class="column100 column22" data-column="column22">{{ row.type }}</td>
+                                <td class="column100 column23" data-column="column23">{{ row.pitch_type }}</td>
+                                {% else %}
+                                <td class="column100 column0" data-column="column0">{{ row.pitcher_name }}</td>
+                                <td class="column100 column2" data-column="column2">{{ row.avg_start_speed }}</td>
+                                <td class="column100 column3" data-column="column3">{{ row.avg_spin_rate }}</td>
+                                <td class="column100 column4" data-column="column4">{{ row.avg_break_length }}</td>
+                                <td class="column100 column5" data-column="column5">{{ row.avg_break_y }}</td>
+                                {% endif %}
+							</tr>
+							{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+            <span style="display: flex; margin-left: auto; background-color: lightgray;">
+                <div style="padding: 5px; margin-top: 0.5em">Showing results {{ start_index }}-{{ end_index }}</div>
+                <a href="{% url 'pitch_search_detail' pitcher_name=pitcher_name view_type=view_type page_num=prev_page %}" style="padding-right: 5px">
+                    <button type="button" class="btn btn-secondary">Previous</button>
+                </a>
+                <a href="{% url 'pitch_search_detail' pitcher_name=pitcher_name view_type=view_type page_num=next_page %}">
+                    <button type="button" class="btn btn-secondary">Next</button>
+                </a>
+            </span>
+		</div>
+	</div>
+    {% endif %}
+    {% endblock %}
+
+    <footer>
+        <p style="position: fixed; bottom: 0; width: 100%; padding-bottom: 5px;">&copy; Alan Xu, Jai Bansal</p>
+    </footer>
+</div>
+
+
+<!--===============================================================================================-->	
+<script src="{% static 'dashboard/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'dashboard/js/main.js' %}"></script>
+</body>
+</html>

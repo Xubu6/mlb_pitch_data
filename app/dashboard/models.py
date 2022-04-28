@@ -9,6 +9,46 @@ class PlayerNames(models.Model):
         managed = False
         db_table = 'auth_group'
 
+class PitchAnalysisView(models.Model):
+    id = models.IntegerField(primary_key=True)
+    ab_id = models.IntegerField()
+    batter_id = models.IntegerField(blank=True, null=True)
+    batter_name = models.CharField(max_length=55, blank=True, null=True)
+    event = models.CharField(max_length=20, blank=True, null=True)
+    pitcher_id = models.IntegerField(blank=True, null=True)
+    pitcher_name = models.CharField(max_length=55, blank=True, null=True)
+    stand = models.CharField(max_length=2, blank=True, null=True)
+    top = models.CharField(max_length=10, blank=True, null=True)
+    px = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)
+    pz = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)
+    start_speed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    end_speed = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    spin_rate = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    spin_dir = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    break_angle = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    break_length = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    break_y = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+    nasty = models.IntegerField(blank=True, null=True)
+    zone = models.IntegerField(blank=True, null=True)
+    code = models.CharField(max_length=3, blank=True, null=True)
+    type = models.CharField(max_length=2, blank=True, null=True)
+    pitch_type = models.CharField(max_length=3, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pitch_analysis_view'
+
+class PitcherInfo(models.Model):
+    pitcher_name = models.CharField(primary_key=True, max_length=55)
+    avg_start_speed = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    avg_spin_rate = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    avg_break_length = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    avg_break_y = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pitcher_info'
+
 # Model for Table atbats
 class Atbats(models.Model):
     ab_id = models.IntegerField(primary_key=True)

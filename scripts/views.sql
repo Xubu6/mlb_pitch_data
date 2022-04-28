@@ -15,15 +15,13 @@ ORDER BY id;
 -- Create view `pitcher_info`;
 -- Average start speeds, spin rates, break lengths, and vertical breaks by all pitchers in the data
 CREATE OR REPLACE VIEW `pitcher_info` AS
-SELECT pitcher_name, AVG(start_speed), AVG(spin_rate), AVG(break_length), AVG(break_y)
+SELECT pitcher_name, AVG(start_speed) AS avg_start_speed, AVG(spin_rate) AS avg_spin_rate, AVG(break_length) AS avg_break_length, AVG(break_y) AS avg_break_y
 FROM pitch_analysis
 GROUP BY pitcher_name;
 
 -- SELECT * FROM pitcher_info;
 
-
-
-
+-- SELECT * FROM pitch_analysis_view;
 
 
 
