@@ -5,7 +5,7 @@ This involves database setup and population, package/dependency installations, a
 
 ## Database Setup
 
-We have decomposed our dataset into two tables, `pitches` and `at_bats`, the data for which are in `/raw_data/pitches.csv` and `/raw_data/atbats.csv` respectively.
+We have decomposed our raw dataset into two tables, `pitches` and `at_bats`, the data for which are in `/raw_data/pitches.csv` and `/raw_data/atbats.csv` respectively.
 We modeled our schema, `pitch_data`, to reflect this decomposition. The two tables are linked by foreign key `ab_id`, with a 1..* cardinality (i.e. one at bat can have multiple pitches, and each pitch is associated with one single at bat). 
 
 To create the schema and tables, run the SQL script in `/scripts/create_pitch_schema_tables.sql`, which will create the `pitch_data` schema containing tables:
