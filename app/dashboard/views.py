@@ -328,7 +328,6 @@ def pitch_search(request):
     if request.method == "POST":
         pitcher_name = request.POST.get("pitcher_name")
         view_type = request.POST.get("view_type")
-        print(pitcher_name, ' and ', view_type)
         return redirect ('pitch_search_detail', pitcher_name=pitcher_name, view_type=view_type, page_num=0)
 
     context = {
